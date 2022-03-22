@@ -62,11 +62,7 @@ target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC ${INCLUDE_DIRS})
 #        DESTINATION ./examples/restPackage/
 #        COMPONENT install
 #        )
-
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/mac
-        DESTINATION macros
-        COMPONENT install
-        )
+#
 
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 install(TARGETS ${PROJECT_NAME} DESTINATION .)
