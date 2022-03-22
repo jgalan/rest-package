@@ -1,5 +1,5 @@
 # Setup the project
-project(dummy)
+project(restPackage)
 
 message("===============  ${PROJECT_NAME}  ==============")
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake ${CMAKE_MODULE_PATH})
@@ -47,13 +47,13 @@ string(STRIP "${LINK_LIBRARIES}" LINK_LIBRARIES)
 ##file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.h)
 ##########
 
-add_executable(${PROJECT_NAME} dummy.cxx ${sources} ${headers})
+add_executable(${PROJECT_NAME} restPackage.cxx ${sources} ${headers})
 target_link_libraries(${PROJECT_NAME} ${LINK_LIBRARIES})
 target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC ${INCLUDE_DIRS})
 
 # Copy scripts to the build directory
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/examples/
-        DESTINATION ./examples/dummy/
+        DESTINATION ./examples/restPackage/
         COMPONENT install
         )
 
