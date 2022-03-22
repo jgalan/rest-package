@@ -1,6 +1,8 @@
 # Setup the project
 project(restPackage)
 
+cmake_minimum_required(VERSION 3.13)
+
 message("===============  ${PROJECT_NAME}  ==============")
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake ${CMAKE_MODULE_PATH})
 
@@ -8,13 +10,13 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake ${CMAKE_MODULE_PAT
 find_package(ROOT REQUIRED COMPONENTS RIO Geom)
 execute_process(COMMAND root-config --cflags OUTPUT_VARIABLE ROOT_CFLAGS)
 string(STRIP ${ROOT_CFLAGS} ROOT_CFLAGS)
-message(STATUS "-- Found ROOT version: ${ROOT_VERSION} with compilation flags: ${ROOT_CFLAGS} and libraries: ${ROOT_LIBRARIES}")
+message(STATUS "Found ROOT version: ${ROOT_VERSION} with compilation flags: ${ROOT_CFLAGS} and libraries: ${ROOT_LIBRARIES}")
 
 # Find REST
 if (NOT DEFINED REST_PATH)
     if (DEFINED ENV{REST_PATH})
         set(REST_PATH $ENV{REST_PATH})
-    else ()
+	else ()
         message(FATAL_ERROR "ERROR ::: REST_PATH must be defined as an environment variable and point to REST install directory")
         return()
     endif ()
@@ -39,7 +41,10 @@ endif ()
 # Set include and lib
 set(INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIRS} ${rest_include_dirs})
 
-set(LINK_LIBRARIES ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} -lGui -lGeom -lMinuit)
+
+execute_process(COMMAND rest-config --libs OUTPUT_VARIABLE REST_LIBS)
+set(LINK_LIBRARIES ${ROOT_LIBRARIES} ${REST_LIBS})
+message(STATUS "Link libraries: ${LINK_LIBRARIES}")
 string(STRIP "${LINK_LIBRARIES}" LINK_LIBRARIES)
 
 ###### UNCOMMENT this if you want to add additional code at src/ inc/ directories
@@ -63,7 +68,5 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/mac
         )
 
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
-install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(TARGETS ${PROJECT_NAME} DESTINATION .)
 
-set(package_added "${PROJECT_NAME} ")
-set(package_added ${package_added} PARENT_SCOPE)
