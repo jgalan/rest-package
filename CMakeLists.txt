@@ -57,10 +57,11 @@ target_link_libraries(${PROJECT_NAME} ${LINK_LIBRARIES})
 target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC ${INCLUDE_DIRS})
 
 # Copy scripts to the build directory
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/examples/
-        DESTINATION ./examples/restPackage/
-        COMPONENT install
-        )
+## Enable this if you create an examples directory
+# install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/examples/
+#        DESTINATION ./examples/restPackage/
+#        COMPONENT install
+#        )
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/mac
         DESTINATION macros
